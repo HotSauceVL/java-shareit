@@ -13,5 +13,7 @@ public interface UserDao {
     User add(UserDto userDto);
 
     User update(long userId, UserDto userDto);
+
     void delete(long userId);
+
 }
