@@ -26,18 +26,18 @@ public class ItemDaoImpl implements ItemDao {
 
     @Override
     public List<Item> getAllByUserId(long userId) {
-        return items.values().stream().
-                filter(item -> item.getOwner().getId() == userId).
-                collect(Collectors.toList());
+        return items.values().stream()
+                .filter(item -> item.getOwner().getId() == userId)
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Item> searchByText(String text) {
-        return items.values().stream().
-                filter(Item::isAvailable).
-                filter((item)-> item.getName().toLowerCase().contains(text.toLowerCase()) ||
-                        item.getDescription().toLowerCase().contains(text.toLowerCase())).
-                collect(Collectors.toList());
+        return items.values().stream()
+                .filter(Item::isAvailable)
+                .filter((item) -> item.getName().toLowerCase().contains(text.toLowerCase()) ||
+                        item.getDescription().toLowerCase().contains(text.toLowerCase()))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -52,9 +52,7 @@ public class ItemDaoImpl implements ItemDao {
     @Override
     public Item update(User user, long itemId, ItemDto itemDto) {
         checkId(itemId);
-        if (user.getId() != items.get(itemId).getOwner().getId()) {
-            throw new AccessErrorException("Пользователь не является владельцем вещи");
-        }
+        isOwner(user.getId(), items.get(itemId));
         if (itemDto.getName() != null) {
             items.get(itemId).setName(itemDto.getName());
         }
@@ -70,6 +68,13 @@ public class ItemDaoImpl implements ItemDao {
         return items.get(itemId);
     }
 
+    @Override
+    public void delete(long userId, long itemId) {
+        checkId(itemId);
+        isOwner(userId, items.get(itemId));
+        items.remove(itemId);
+    }
+
     private long getNextId() {
         return ++id;
     }
@@ -77,6 +82,12 @@ public class ItemDaoImpl implements ItemDao {
     private void checkId(long itemId) {
         if (!items.containsKey(itemId)) {
             throw new ItemNotFoundException("Предмета с таким id: " + itemId + " не существует");
+        }
+    }
+
+    private void isOwner(long userId, Item item) {
+        if (userId != item.getOwner().getId()) {
+            throw new AccessErrorException("Пользователь не является владельцем вещи");
         }
     }
 }

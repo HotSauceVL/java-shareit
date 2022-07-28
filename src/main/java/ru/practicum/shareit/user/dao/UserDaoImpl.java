@@ -56,7 +56,7 @@ public class UserDaoImpl implements UserDao {
         users.remove(userId);
     }
 
-    private long getNextId(){
+    private long getNextId() {
         return ++id;
     }
 
