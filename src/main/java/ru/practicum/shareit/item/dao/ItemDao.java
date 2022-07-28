@@ -16,6 +16,5 @@ public interface ItemDao {
     Item add(User user, ItemDto itemDto);
 
     Item update(User user, long itemId, ItemDto itemDto);
-    
     void delete(long userId, long itemId);
 }
