@@ -11,8 +11,8 @@ public class Booking {
     private long id;
     private User booker;
     private Item item;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDate start;
+    private LocalDate end;
     private BookingStatus status;
 
 }

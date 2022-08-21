@@ -18,5 +18,5 @@ public class ItemDto {
     private String description;
     @NotNull(groups = OnCreate.class)
     private Boolean available;
-    private ItemRequest request;
+   // private ItemRequest request;
 }

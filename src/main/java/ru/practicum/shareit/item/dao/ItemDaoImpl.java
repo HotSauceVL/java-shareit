@@ -62,9 +62,9 @@ public class ItemDaoImpl implements ItemDao {
         if (itemDto.getAvailable() != null) {
             items.get(itemId).setAvailable(itemDto.getAvailable());
         }
-        if (itemDto.getRequest() != null) {
-            items.get(itemId).setRequest(itemDto.getRequest());
-        }
+        //if (itemDto.getRequest() != null) {
+         //   items.get(itemId).setRequest(itemDto.getRequest());
+       // }
         return items.get(itemId);
     }
 

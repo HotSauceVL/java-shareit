@@ -5,7 +5,10 @@ import org.springframework.stereotype.Service;
 import ru.practicum.shareit.item.dao.ItemDao;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.mapper.ItemMapper;
+import ru.practicum.shareit.item.model.Item;
+import ru.practicum.shareit.item.repository.ItemRepository;
 import ru.practicum.shareit.user.dao.UserDao;
+import ru.practicum.shareit.user.dao.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,15 +20,18 @@ public class ItemServiceImpl implements ItemService {
 
     private final ItemDao itemDao;
     private final UserDao userDao;
+    private final ItemRepository itemRepository;
+    private final UserRepository userRepository;
 
     @Override
     public ItemDto getById(long itemId) {
-        return ItemMapper.toItemDto(itemDao.getById(itemId));
+        return ItemMapper.toItemDto(itemRepository.findById(itemId).get());
     }
 
     @Override
     public List<ItemDto> getAllByUserId(long userId) {
-        return itemDao.getAllByUserId(userId).stream().map(ItemMapper::toItemDto).collect(Collectors.toList());
+        return
+                itemDao.getAllByUserId(userId).stream().map(ItemMapper::toItemDto).collect(Collectors.toList());
     }
 
     @Override
@@ -39,12 +45,18 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemDto add(long userId, ItemDto itemDto) {
-        return ItemMapper.toItemDto(itemDao.add(userDao.getById(userId), itemDto));
+        Item item = ItemMapper.toItem(itemDto);
+        item.setOwner(userRepository.findById(userId).get());
+        return ItemMapper.toItemDto(itemRepository.save(item));
     }
 
     @Override
     public ItemDto update(long userId, long itemId, ItemDto itemDto) {
-        return ItemMapper.toItemDto(itemDao.update(userDao.getById(userId), itemId, itemDto));
+        Item item = ItemMapper.toItem(itemDto);
+
+
+        return ItemMapper.toItemDto(
+                itemDao.update(userDao.getById(userId), itemId, itemDto));
     }
 
     @Override
