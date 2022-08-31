@@ -8,7 +8,6 @@ import javax.xml.bind.ValidationException;
 import java.util.List;
 
 public interface BookingService {
-
     BookingOutputDto add(Long userId, BookingInputDto bookingInputDto) throws ValidationException;
     BookingOutputDto bookingConfirmation(Long userId, Long bookingId, boolean approved);
     BookingOutputDto getById(Long userId, Long bookingId);

@@ -1,8 +1,6 @@
 package ru.practicum.shareit.user;
 
 import lombok.*;
-import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.context.annotation.Primary;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;

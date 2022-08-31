@@ -16,7 +16,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
                                                                                         LocalDateTime end);
     Optional<List<Booking>> findAllByBooker_IdAndStartIsAfterOrderByStartDesc(long bookerId, LocalDateTime start);
     Optional<List<Booking>> findAllByBooker_IdAndEndIsBeforeOrderByStartDesc(long booker_Id, LocalDateTime end);
-
     List<Booking> findAllByItem_IdOrderByStartDesc(long itemId);
     List<Booking> findAllByItem_IdAndStatusOrderByStartDesc(long itemId, BookingStatus status);
     List<Booking> findAllByItem_IdAndStartBeforeAndEndAfterOrderByStartDesc(long itemId,
@@ -26,7 +25,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     List<Booking> findAllByItem_IdAndEndIsBeforeOrderByStartDesc(long itemId, LocalDateTime end);
     boolean existsBookingByBooker_IdAndItem_IdAndStatusEqualsAndEndIsBefore(long bookerId, long itemId,
                                                                             BookingStatus status, LocalDateTime end);
-    Optional<Booking> findFirstBookingByItem_IdAndEndIsBeforeOrderByEndDesc(long item_id, LocalDateTime now);
-    Optional<Booking> findFirstBookingByItem_IdAndStartIsAfterOrderByStart(long item_id, LocalDateTime now);
+    Optional<Booking> findFirstBookingByItem_IdAndEndIsBeforeOrderByEndDesc(long itemId, LocalDateTime now);
+    Optional<Booking> findFirstBookingByItem_IdAndStartIsAfterOrderByStart(long itemId, LocalDateTime now);
 
 }

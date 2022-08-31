@@ -47,14 +47,12 @@ public class BookingServiceImpl implements BookingService {
         BookingStatus status;
         if (approved) {
             status = BookingStatus.APPROVED;
-        }
-        else {
+        } else {
             status = BookingStatus.REJECTED;
         }
         if (checkOwner(userId, booking)) {
             booking.setStatus(status);
-        }
-        else {
+        } else {
             throw new AccessErrorException("Пользователь не является владельцем вещи");
         }
 
@@ -201,8 +199,7 @@ public class BookingServiceImpl implements BookingService {
                 .orElseThrow(() -> new ItemNotFoundException("Предмета с таким id: " + itemId + " не существует"));
         if (item.isAvailable()) {
             return item;
-        }
-        else {
+        } else {
             throw new ItemAvailableException("Вещь " + itemId + " недоступна");
         }
     }
