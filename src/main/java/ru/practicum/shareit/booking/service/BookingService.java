@@ -9,8 +9,12 @@ import java.util.List;
 
 public interface BookingService {
     BookingOutputDto add(Long userId, BookingInputDto bookingInputDto) throws ValidationException;
+
     BookingOutputDto bookingConfirmation(Long userId, Long bookingId, boolean approved);
+
     BookingOutputDto getById(Long userId, Long bookingId);
+
     List<BookingOutputDto> getAllBookingByUser(Long userId, StateStatus state);
+
     List<BookingOutputDto> getAllBookingByOwner(Long userId, StateStatus state);
 }
