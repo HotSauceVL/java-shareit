@@ -1,6 +1,7 @@
 package ru.practicum.shareit.user;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.context.annotation.Primary;
 
 import javax.persistence.*;
@@ -9,7 +10,6 @@ import java.util.Objects;
 
 @Getter
 @Setter
-@ToString
 @RequiredArgsConstructor
 @Entity
 @Table(name = "users")
@@ -19,7 +19,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false)
-    private Long id;
+    private long id;
     @Column(name = "name")
     private String name;
     @Column(name = "email")
