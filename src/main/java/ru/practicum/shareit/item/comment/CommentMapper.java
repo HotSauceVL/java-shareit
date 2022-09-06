@@ -1,6 +1,5 @@
 package ru.practicum.shareit.item.comment;
 
-import ru.practicum.shareit.item.mapper.ItemMapper;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.User;
 
@@ -23,7 +22,7 @@ public class CommentMapper {
                 comment.getId(),
                 comment.getText(),
                 comment.getAuthor().getName(),
-                ItemMapper.toItemDto(comment.getItem()),
+                comment.getItem().getId(),
                 comment.getCreated()
         );
     }

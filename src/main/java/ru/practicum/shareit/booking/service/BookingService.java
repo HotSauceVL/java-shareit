@@ -2,19 +2,19 @@ package ru.practicum.shareit.booking.service;
 
 import ru.practicum.shareit.booking.StateStatus;
 import ru.practicum.shareit.booking.dto.BookingInputDto;
-import ru.practicum.shareit.booking.dto.BookingOutputDto;
+import ru.practicum.shareit.booking.model.Booking;
 
 import javax.xml.bind.ValidationException;
 import java.util.List;
 
 public interface BookingService {
-    BookingOutputDto add(Long userId, BookingInputDto bookingInputDto) throws ValidationException;
+    Booking add(Long userId, BookingInputDto bookingInputDto) throws ValidationException;
 
-    BookingOutputDto bookingConfirmation(Long userId, Long bookingId, boolean approved);
+    Booking bookingConfirmation(Long userId, Long bookingId, boolean approved);
 
-    BookingOutputDto getById(Long userId, Long bookingId);
+    Booking getById(Long userId, Long bookingId);
 
-    List<BookingOutputDto> getAllBookingByUser(Long userId, StateStatus state);
+    List<Booking> getAllBookingByUser(Long userId, StateStatus state);
 
-    List<BookingOutputDto> getAllBookingByOwner(Long userId, StateStatus state);
+    List<Booking> getAllBookingByOwner(Long userId, StateStatus state);
 }
