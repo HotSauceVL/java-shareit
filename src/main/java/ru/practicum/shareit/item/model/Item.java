@@ -8,7 +8,6 @@ import ru.practicum.shareit.user.User;
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -39,10 +38,8 @@ public class Item {
     private String description;
     @Column(name = "is_available")
     private boolean available;
-    //@OneToMany(mappedBy = "item", fetch = FetchType.EAGER)
     @Transient
     private List<Booking> bookings;
-    //@OneToMany(mappedBy = "item", fetch = FetchType.EAGER)
     @Transient
     private List<Comment> comments;
     @Transient

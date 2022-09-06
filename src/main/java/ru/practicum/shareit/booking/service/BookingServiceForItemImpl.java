@@ -15,6 +15,7 @@ public class BookingServiceForItemImpl implements BookingServiceForItem {
     // При попытке добавить BookingService в ItemServiceImpl возникает циклическая зависимость, насколько корректно
     // создавать этот класс для работы с ItemServiceImpl ??
     private final BookingRepository bookingRepository;
+
     @Override
     public Optional<Booking> getLastBooking(long itemId) {
         return bookingRepository.findFirstBookingByItem_IdAndEndIsBeforeOrderByEndDesc(itemId,
