@@ -1,8 +1,10 @@
 package ru.practicum.shareit.item.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import ru.practicum.shareit.item.comment.CommentDto;
+import ru.practicum.shareit.requests.model.ItemRequest;
 import ru.practicum.shareit.validate.OnCreate;
 
 import javax.validation.constraints.NotBlank;
@@ -10,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
+@Builder
 @AllArgsConstructor
 public class ItemDto {
     private long id;
@@ -20,5 +23,5 @@ public class ItemDto {
     @NotNull(groups = OnCreate.class)
     private Boolean available;
     private List<CommentDto> comments;
-   // private ItemRequest request;
+    private Long requestId;
 }

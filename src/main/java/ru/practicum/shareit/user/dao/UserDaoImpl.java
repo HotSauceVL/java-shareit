@@ -3,7 +3,7 @@ package ru.practicum.shareit.user.dao;
 import org.springframework.stereotype.Component;
 import ru.practicum.shareit.error.exception.EmailExistException;
 import ru.practicum.shareit.error.exception.UserNotFoundException;
-import ru.practicum.shareit.user.User;
+import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.user.mapper.UserMapper;
 

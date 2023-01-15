@@ -3,7 +3,8 @@ package ru.practicum.shareit.item.model;
 import lombok.*;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.item.comment.Comment;
-import ru.practicum.shareit.user.User;
+import ru.practicum.shareit.requests.model.ItemRequest;
+import ru.practicum.shareit.user.model.User;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,15 +12,17 @@ import java.util.Objects;
 
 @Getter
 @Setter
+@Builder
 @RequiredArgsConstructor
 @Entity
 @Table(name = "items")
 @AllArgsConstructor
 public class Item {
 
-    public Item(long id, User owner, String name, String description, boolean available) {
+    public Item(long id, User owner, ItemRequest itemRequest, String name, String description, boolean available) {
         this.id = id;
         this.owner = owner;
+        this.itemRequest = itemRequest;
         this.name = name;
         this.description = description;
         this.available = available;
@@ -32,6 +35,9 @@ public class Item {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "owner_id")
     private User owner;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "request_id")
+    private ItemRequest itemRequest;
     @Column(name = "name")
     private String name;
     @Column(name = "description")

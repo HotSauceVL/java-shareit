@@ -39,19 +39,27 @@ public class ItemController {
     @GetMapping
     @Transactional(rollbackOn = Exception.class)
     public List<ItemDtoWithBooking> getAllByUserId(@RequestHeader("X-Sharer-User-Id") long userId,
+                                                   @RequestParam(value = "from", required = false,
+                                                           defaultValue = "0") Integer from,
+                                                   @RequestParam(value = "size", required = false,
+                                                           defaultValue = "20") Integer size,
                                                    HttpServletRequest httpServletRequest) {
         log.info("Получен запрос к эндпоинту: {} {}, значение X-Sharer-User-Id {}", httpServletRequest.getMethod(),
                 httpServletRequest.getRequestURI(), userId);
-        return itemService.getAllByUserId(userId)
+        return itemService.getAllByUserId(userId, from, size)
                 .stream().map(ItemMapper::toItemDtoWithBooking).collect(Collectors.toList());
     }
 
     @GetMapping("/search")
     public List<ItemDto> searchByText(@RequestParam(value = "text", required = false) String text,
+                                      @RequestParam(value = "from", required = false,
+                                              defaultValue = "0") Integer from,
+                                      @RequestParam(value = "size", required = false,
+                                              defaultValue = "20") Integer size,
                                       HttpServletRequest httpServletRequest) {
         log.info("Получен запрос к эндпоинту: {} {}, значение параметра поиска {}", httpServletRequest.getMethod(),
                 httpServletRequest.getRequestURI(), text);
-        return itemService.searchByText(text).stream().map(ItemMapper::toItemDto).collect(Collectors.toList());
+        return itemService.searchByText(text, from, size).stream().map(ItemMapper::toItemDto).collect(Collectors.toList());
     }
 
     @PostMapping
