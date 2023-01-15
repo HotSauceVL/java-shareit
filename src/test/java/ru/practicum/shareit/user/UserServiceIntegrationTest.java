@@ -30,11 +30,12 @@ public class UserServiceIntegrationTest {
 
 
     @Test
-    void getAllShouldReturnListOfUsers() {
+    void getByIdShouldReturnUser() {
         User user = userService.add(userDto);
         User anotherUser = userService.add(anotherUserDto);
 
-        assertEquals(List.of(user, anotherUser), userService.getAll());
+        assertEquals(user, userService.getById(user.getId()));
+        assertEquals(anotherUser, userService.getById(anotherUser.getId()));
     }
 
 }
