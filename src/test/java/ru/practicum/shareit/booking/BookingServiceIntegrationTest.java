@@ -1,8 +1,10 @@
 package ru.practicum.shareit.booking;
 
 import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.practicum.shareit.booking.dto.BookingInputDto;
 import ru.practicum.shareit.booking.model.Booking;
@@ -21,6 +23,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@AutoConfigureTestDatabase
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class BookingServiceIntegrationTest {
 
@@ -52,6 +55,11 @@ public class BookingServiceIntegrationTest {
             .endDate(LocalDateTime.now().plusDays(3))
             .status(BookingStatus.APPROVED)
             .build();
+
+    @BeforeEach
+    void dropTabs() {
+
+    }
 
     @Test
     void getAllBookingByOwnerShouldReturnListOfBookings() throws ValidationException {
