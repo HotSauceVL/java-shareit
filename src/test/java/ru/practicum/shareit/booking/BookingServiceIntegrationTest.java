@@ -28,7 +28,7 @@ public class BookingServiceIntegrationTest {
     private final ItemService itemService;
     private final UserService userService;
 
-    private final UserDto ownerUserDto= UserDto.builder()
+    private final UserDto ownerUserDto = UserDto.builder()
             .name("Owner")
             .email("owner@yandex.ru").build();
     private final UserDto bookerUserDto = UserDto.builder()

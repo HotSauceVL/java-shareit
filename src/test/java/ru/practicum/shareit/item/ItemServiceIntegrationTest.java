@@ -22,7 +22,7 @@ public class ItemServiceIntegrationTest {
     private final ItemService itemService;
     private final UserService userService;
 
-    private final UserDto userDto= UserDto.builder()
+    private final UserDto userDto = UserDto.builder()
             .name("User")
             .email("User@yandex.ru").build();
 

@@ -11,9 +11,9 @@ import java.util.Optional;
 
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
-    Optional<List<Booking>> findAllByBooker_Id (Long bookerId, Pageable pageable);
+    Optional<List<Booking>> findAllByBooker_Id(Long bookerId, Pageable pageable);
 
-    Optional<List<Booking>> findAllByItemOwnerId (Long ownerId, Pageable pageable);
+    Optional<List<Booking>> findAllByItemOwnerId(Long ownerId, Pageable pageable);
 
     boolean existsBookingByBooker_IdAndItem_IdAndStatusEqualsAndEndIsBefore(long bookerId, long itemId,
                                                                             BookingStatus status, LocalDateTime end);

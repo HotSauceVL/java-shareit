@@ -72,7 +72,7 @@ public class UserControllerTest {
 
         mockMvc.perform(get(baseUrl + "/{id}", user.getId()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name" , is("User")));
+                .andExpect(jsonPath("$.name", is("User")));
     }
 
     @Test
@@ -94,7 +94,7 @@ public class UserControllerTest {
                         .contentType("application/json")
                         .content(mapper.writeValueAsString(userDto)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name" , is("User")));
+                .andExpect(jsonPath("$.name", is("User")));
     }
 
     @Test

@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import ru.practicum.shareit.item.comment.CommentDto;
-import ru.practicum.shareit.requests.model.ItemRequest;
 import ru.practicum.shareit.validate.OnCreate;
 
 import javax.validation.constraints.NotBlank;

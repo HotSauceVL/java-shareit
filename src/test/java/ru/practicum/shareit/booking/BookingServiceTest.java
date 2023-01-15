@@ -37,7 +37,7 @@ class BookingServiceTest {
     UserService userService;
 
     private final LocalDateTime date = LocalDateTime.now();
-    private final User ownerUser= User.builder()
+    private final User ownerUser = User.builder()
             .id(1L)
             .name("Owner")
             .email("owner@yandex.ru").build();

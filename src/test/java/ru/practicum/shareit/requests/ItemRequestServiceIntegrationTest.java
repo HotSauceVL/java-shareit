@@ -19,7 +19,7 @@ public class ItemRequestServiceIntegrationTest {
 
     private final UserService userService;
     private final ItemRequestService itemRequestService;
-    private final UserDto userDto= UserDto.builder()
+    private final UserDto userDto = UserDto.builder()
             .name("User")
             .email("User@yandex.ru").build();
 

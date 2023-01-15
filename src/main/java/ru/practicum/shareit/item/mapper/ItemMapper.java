@@ -5,7 +5,6 @@ import ru.practicum.shareit.item.comment.CommentMapper;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.dto.ItemDtoWithBooking;
 import ru.practicum.shareit.item.model.Item;
-import ru.practicum.shareit.requests.model.ItemRequest;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;

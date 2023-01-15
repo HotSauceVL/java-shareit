@@ -18,11 +18,11 @@ public class UserServiceIntegrationTest {
 
     private final UserService userService;
 
-    private final UserDto userDto= UserDto.builder()
+    private final UserDto userDto = UserDto.builder()
             .name("User")
             .email("User@yandex.ru").build();
 
-    private final UserDto anotherUserDto= UserDto.builder()
+    private final UserDto anotherUserDto = UserDto.builder()
             .name("Another user")
             .email("AnotherUser@yandex.ru").build();
 

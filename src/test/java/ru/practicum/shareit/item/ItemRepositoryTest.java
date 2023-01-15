@@ -23,7 +23,7 @@ public class ItemRepositoryTest {
 
     private final TestEntityManager testEntityManager;
 
-    private final User user= User.builder()
+    private final User user = User.builder()
             .name("Owner")
             .email("owner@yandex.ru").build();
 

@@ -25,7 +25,7 @@ public class BookingRepositoryTest {
 
     private final TestEntityManager testEntityManager;
 
-    private final User ownerUser= User.builder()
+    private final User ownerUser = User.builder()
             .name("Owner")
             .email("owner@yandex.ru").build();
     private final User bookerUser = User.builder()
