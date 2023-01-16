@@ -56,24 +56,11 @@ public class ErrorHandler {
         return new ErrorResponse(e.getMessage());
     }
 
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public ErrorResponse handleEmailExistException(final EmailExistException e) {
-        log.info("Такой email уже существует: " + e.getMessage());
-        return new ErrorResponse(e.getMessage());
-    }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleBadRequestException(final BadRequestException e) {
         log.info("Ошибка запроса: " + e.getMessage());
-        return new ErrorResponse(e.getMessage());
-    }
-
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleItemAvailableException(final ItemAvailableException e) {
-        log.info("Предмет недоступен: " + e.getMessage());
         return new ErrorResponse(e.getMessage());
     }
 

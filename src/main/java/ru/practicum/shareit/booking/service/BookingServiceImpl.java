@@ -132,7 +132,7 @@ public class BookingServiceImpl implements BookingService {
 
     private void checkItemAvailable(Item item) {
         if (!item.isAvailable()) {
-            throw new ItemAvailableException("Вещь " + item.getId() + " недоступна");
+            throw new BadRequestException("Вещь " + item.getId() + " недоступна");
         }
     }
 

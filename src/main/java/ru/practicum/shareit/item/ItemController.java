@@ -10,7 +10,6 @@ import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.dto.ItemDtoWithBooking;
 import ru.practicum.shareit.item.mapper.ItemMapper;
 import ru.practicum.shareit.item.service.ItemService;
-import ru.practicum.shareit.validate.OnCreate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
@@ -63,7 +62,7 @@ public class ItemController {
     }
 
     @PostMapping
-    @Validated(OnCreate.class)
+    @Validated
     public ItemDto add(@RequestHeader("X-Sharer-User-Id") long userId, @Valid @RequestBody ItemDto itemDto,
                        HttpServletRequest httpServletRequest) {
         log.info("Получен запрос к эндпоинту: {} {}, значение X-Sharer-User-Id {}, тело запроса {}",

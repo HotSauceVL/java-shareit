@@ -1,39 +1,51 @@
-package ru.practicum.shareit.booking;
+package ru.practicum.shareit.item;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.servlet.MockMvc;
+import ru.practicum.shareit.booking.BookingStatus;
 import ru.practicum.shareit.booking.dto.BookingInputDto;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.service.BookingService;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.service.ItemService;
+import ru.practicum.shareit.user.UserController;
 import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.ValidationException;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @AutoConfigureTestDatabase
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-public class BookingServiceIntegrationTest {
+public class ItemControllerIntegrationTest {
 
-    private final BookingService bookingService;
+    private final ItemController itemController;
     private final ItemService itemService;
     private final UserService userService;
+    private final BookingService bookingService;
 
     private final UserDto ownerUserDto = UserDto.builder()
             .name("Owner")
             .email("owner@yandex.ru").build();
+
     private final UserDto bookerUserDto = UserDto.builder()
             .name("Booker")
             .email("booker@yandex.ru").build();
@@ -44,9 +56,15 @@ public class BookingServiceIntegrationTest {
             .available(true)
             .build();
 
+    private final ItemDto anotherItemDto = ItemDto.builder()
+            .name("Another Item")
+            .description("Another Item description")
+            .available(true)
+            .build();
+
     private final BookingInputDto bookingCurrentDto = BookingInputDto.builder()
-            .startDate(LocalDateTime.now().minusDays(1))
-            .endDate(LocalDateTime.now().plusDays(1))
+            .startDate(LocalDateTime.now().minusDays(2))
+            .endDate(LocalDateTime.now().minusDays(1))
             .status(BookingStatus.APPROVED)
             .build();
 
@@ -56,28 +74,25 @@ public class BookingServiceIntegrationTest {
             .status(BookingStatus.APPROVED)
             .build();
 
-    @BeforeEach
-    void dropTabs() {
-
-    }
-
     @Test
-    void getAllBookingByOwnerShouldReturnListOfBookings() throws ValidationException {
+    void getAllByUserIdShouldReturnListOfItem() throws Exception {
         User ownerUser = userService.add(ownerUserDto);
         User bookerUser = userService.add(bookerUserDto);
         Item item = itemService.add(ownerUser.getId(), itemDto);
+        Item anotherItem = itemService.add(ownerUser.getId(), anotherItemDto);
         bookingCurrentDto.setItemId(item.getId());
         bookingCurrentDto.setBookerId(bookerUser.getId());
         bookingFutureDto.setItemId(item.getId());
         bookingFutureDto.setBookerId(bookerUser.getId());
-        Booking  bookingCurrent = bookingService.add(bookerUser.getId(), bookingCurrentDto);
+        Booking bookingPast = bookingService.add(bookerUser.getId(), bookingCurrentDto);
         Booking  bookingFuture = bookingService.add(bookerUser.getId(), bookingFutureDto);
+        HttpServletRequest httpServletRequest = mock(HttpServletRequest.class);
 
-        assertEquals(List.of(bookingCurrent), bookingService
-                .getAllBookingByOwner(ownerUser.getId(), StateStatus.CURRENT, 0, 2));
-
-        assertEquals(List.of(bookingFuture), bookingService
-                .getAllBookingByOwner(ownerUser.getId(), StateStatus.FUTURE, 0, 2));
+        assertEquals(item.getId(), itemController.getAllByUserId(ownerUser.getId(), 0, 2, httpServletRequest).get(0).getId());
+        assertEquals(bookingPast.getId(), itemController.getAllByUserId(ownerUser.getId(), 0, 2, httpServletRequest).get(0).getLastBooking().getId());
+        assertEquals(bookingFuture.getId(), itemController.getAllByUserId(ownerUser.getId(), 0, 2, httpServletRequest).get(0).getNextBooking().getId());
     }
+
+
 
 }

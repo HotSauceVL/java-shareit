@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.requests.dto.ItemRequestDto;
 import ru.practicum.shareit.requests.mapper.ItemRequestMapper;
 import ru.practicum.shareit.requests.service.ItemRequestService;
-import ru.practicum.shareit.validate.OnCreate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
@@ -35,7 +34,7 @@ public class ItemRequestController {
     }
 
     @PostMapping
-    @Validated(OnCreate.class)
+    @Validated
     public ItemRequestDto add(@RequestHeader("X-Sharer-User-Id") long userId,
                               @Valid @RequestBody ItemRequestDto itemRequestDto,
                               HttpServletRequest httpServletRequest) {

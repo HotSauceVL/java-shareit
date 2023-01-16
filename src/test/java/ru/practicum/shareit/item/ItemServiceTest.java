@@ -28,6 +28,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
@@ -211,9 +212,18 @@ public class ItemServiceTest {
     }
 
     @Test
-    void deleteShouldDelete() {
+    void getAllByRequestIdShouldReturnSetofItems() {
+        when(itemRepository.findAllByItemRequest_Id(anyLong())).thenReturn(Set.of(item));
 
-        itemRepository.deleteById(item.getId());
+        Set<Item> resultItem = itemService.getAllByRequestId(1L);
+        verify(itemRepository, times(1)).findAllByItemRequest_Id(anyLong());
+        assertTrue(resultItem.contains(item));
+    }
+
+    @Test
+    void deleteShouldDelete() {
+        when(itemRepository.findById(anyLong())).thenReturn(Optional.of(item));
+        itemService.delete(userId, item.getId());
 
         verify(itemRepository, Mockito.times(1)).deleteById(item.getId());
     }

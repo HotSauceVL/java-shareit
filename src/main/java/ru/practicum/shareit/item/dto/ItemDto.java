@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import ru.practicum.shareit.item.comment.CommentDto;
-import ru.practicum.shareit.validate.OnCreate;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -15,11 +14,11 @@ import java.util.List;
 @AllArgsConstructor
 public class ItemDto {
     private long id;
-    @NotBlank(groups = OnCreate.class)
+    @NotBlank
     private String name;
-    @NotBlank(groups = OnCreate.class)
+    @NotBlank
     private String description;
-    @NotNull(groups = OnCreate.class)
+    @NotNull
     private Boolean available;
     private List<CommentDto> comments;
     private Long requestId;
