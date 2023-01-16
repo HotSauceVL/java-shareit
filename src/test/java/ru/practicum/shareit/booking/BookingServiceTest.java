@@ -116,6 +116,21 @@ class BookingServiceTest {
     }
 
     @Test
+    void addBookingShouldBadRequestExceptionWhenStartDateIsAfterEndDate() {
+        BookingInputDto bookingInputDtoWrong = BookingInputDto.builder()
+                .id(4L)
+                .startDate(date.plusDays(1))
+                .endDate(date.minusHours(1))
+                .itemId(itemFirst.getId())
+                .build();
+
+        when(userService.getById(anyLong())).thenReturn(ownerUser);
+        when(itemService.getById(anyLong(), anyLong())).thenReturn(itemFirst);
+
+        assertThrows(BadRequestException.class, () -> bookingService.add(ownerUser.getId(), bookingInputDtoWrong));
+    }
+
+    @Test
     void bookingConfirmation() {
         when(bookingRepository.findById(anyLong())).thenReturn(Optional.of(bookingWaitingStatus));
         when(bookingRepository.save(any())).thenReturn(bookingWaitingStatus);

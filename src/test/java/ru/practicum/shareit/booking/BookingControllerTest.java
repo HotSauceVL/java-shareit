@@ -193,6 +193,16 @@ public class BookingControllerTest {
     }
 
     @Test
+    void getAllBookingByUserShouldMethodArgumentTypeMismatchException() throws Exception {
+        when(bookingService.getAllBookingByUser(anyLong(), any(), any(), any())).thenReturn(List.of(booking));
+
+        mockMvc.perform(get(baseUrl + "/")
+                        .header("X-Sharer-User-Id", bookerUser.getId())
+                        .param("state", "Wrong state"))
+                .andExpect(status().isInternalServerError());
+    }
+
+    @Test
     void getAllBookingByOwnerShouldReturnBookings() throws Exception {
         when(bookingService.getAllBookingByOwner(anyLong(), any(), any(), any())).thenReturn(List.of(booking));
 
