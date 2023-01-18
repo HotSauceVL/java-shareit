@@ -20,6 +20,7 @@ import ru.practicum.shareit.item.dao.repository.ItemRepository;
 import ru.practicum.shareit.requests.service.ItemRequestCreator;
 import ru.practicum.shareit.user.service.UserService;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -68,6 +69,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public Item add(Long userId, ItemDto itemDto) {
         Item item = ItemMapper.toItem(itemDto);
         item.setOwner(userService.getById(userId));
@@ -78,6 +80,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public Item update(Long userId, Long itemId, ItemDto itemDto) {
         Item item = getItem(itemId);
         checkOwner(userId, item);
@@ -103,6 +106,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public Comment addComment(Long userId, Long itemId, CommentDto commentDto) {
         if (bookingService.checkBooking(userId, itemId, BookingStatus.APPROVED)) {
             return  commentsRepository.save(CommentMapper.toComment(commentDto, userService.getById(userId),

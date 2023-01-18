@@ -1,7 +1,6 @@
 package ru.practicum.shareit.requests.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -15,19 +14,18 @@ import ru.practicum.shareit.requests.mapper.ItemRequestMapper;
 import ru.practicum.shareit.requests.model.ItemRequest;
 import ru.practicum.shareit.user.service.UserService;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Slf4j
 @RequiredArgsConstructor
 public class ItemRequestServiceImpl implements ItemRequestService {
 
     private final ItemRequestRepository itemRequestRepository;
     private final UserService userService;
-
     private final ItemService itemService;
 
     @Override
@@ -38,6 +36,7 @@ public class ItemRequestServiceImpl implements ItemRequestService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public ItemRequest add(long userId, ItemRequestDto itemRequestDto) {
         itemRequestDto.setCreated(LocalDateTime.now());
         ItemRequest itemRequest = ItemRequestMapper.toItemRequest(itemRequestDto);

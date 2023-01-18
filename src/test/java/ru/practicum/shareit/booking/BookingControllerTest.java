@@ -2,6 +2,7 @@ package ru.practicum.shareit.booking;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -92,6 +93,7 @@ public class BookingControllerTest {
             .status(BookingStatus.WAITING)
             .build();
 
+    @DisplayName("Test for add metod should return answer 404 when booker = owner")
     @Test
     void addBookingShouldAnswer404WhenUserIsOwnerTheItem() throws Exception {
         when(bookingService.add(anyLong(), any())).thenThrow(new AccessErrorException(""));

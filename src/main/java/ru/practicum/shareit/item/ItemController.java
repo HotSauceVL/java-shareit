@@ -12,8 +12,9 @@ import ru.practicum.shareit.item.mapper.ItemMapper;
 import ru.practicum.shareit.item.service.ItemService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +28,6 @@ public class ItemController {
     private final ItemService itemService;
 
     @GetMapping("/{itemId}")
-    @Transactional(rollbackOn = Exception.class)
     public ItemDtoWithBooking getById(@PathVariable long itemId, @RequestHeader("X-Sharer-User-Id") long userId,
                                       HttpServletRequest httpServletRequest) {
         log.info("Получен запрос к эндпоинту: {} {}, параметр пути запроса {}, значение X-Sharer-User-Id {}",
@@ -36,12 +36,11 @@ public class ItemController {
     }
 
     @GetMapping
-    @Transactional(rollbackOn = Exception.class)
     public List<ItemDtoWithBooking> getAllByUserId(@RequestHeader("X-Sharer-User-Id") long userId,
                                                    @RequestParam(value = "from", required = false,
-                                                           defaultValue = "0") Integer from,
+                                                           defaultValue = "0") @PositiveOrZero Integer from,
                                                    @RequestParam(value = "size", required = false,
-                                                           defaultValue = "20") Integer size,
+                                                           defaultValue = "20") @Positive Integer size,
                                                    HttpServletRequest httpServletRequest) {
         log.info("Получен запрос к эндпоинту: {} {}, значение X-Sharer-User-Id {}", httpServletRequest.getMethod(),
                 httpServletRequest.getRequestURI(), userId);
@@ -52,9 +51,9 @@ public class ItemController {
     @GetMapping("/search")
     public List<ItemDto> searchByText(@RequestParam(value = "text", required = false) String text,
                                       @RequestParam(value = "from", required = false,
-                                              defaultValue = "0") Integer from,
+                                              defaultValue = "0") @PositiveOrZero Integer from,
                                       @RequestParam(value = "size", required = false,
-                                              defaultValue = "20") Integer size,
+                                              defaultValue = "20") @Positive Integer size,
                                       HttpServletRequest httpServletRequest) {
         log.info("Получен запрос к эндпоинту: {} {}, значение параметра поиска {}", httpServletRequest.getMethod(),
                 httpServletRequest.getRequestURI(), text);

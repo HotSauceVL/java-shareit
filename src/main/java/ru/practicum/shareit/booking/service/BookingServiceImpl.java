@@ -12,12 +12,12 @@ import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.dto.BookingInputDto;
 import ru.practicum.shareit.booking.mapper.BookingMapper;
 import ru.practicum.shareit.booking.dao.repository.BookingRepository;
-import ru.practicum.shareit.booking.service.BookingService;
 import ru.practicum.shareit.error.exception.*;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.service.ItemService;
 import ru.practicum.shareit.user.service.UserService;
 
+import javax.transaction.Transactional;
 import javax.xml.bind.ValidationException;
 
 import java.time.LocalDateTime;
@@ -33,6 +33,7 @@ public class BookingServiceImpl implements BookingService {
     private final ItemService itemService;
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public Booking add(Long userId, BookingInputDto bookingInputDto) throws ValidationException {
         Booking booking = BookingMapper.toBooking(bookingInputDto, userService.getById(userId),
                 itemService.getById(bookingInputDto.getItemId(), userId));
@@ -43,6 +44,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public Booking bookingConfirmation(Long userId, Long bookingId, boolean approved) {
         Booking booking = getBooking(bookingId);
         if (booking.getStatus() == BookingStatus.APPROVED) {

@@ -9,8 +9,9 @@ import ru.practicum.shareit.requests.mapper.ItemRequestMapper;
 import ru.practicum.shareit.requests.service.ItemRequestService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,9 +47,11 @@ public class ItemRequestController {
     @GetMapping("/all")
     public List<ItemRequestDto> getAllItemRequestsCreatedAnotherUsers(@RequestHeader("X-Sharer-User-Id") long userId,
                                                                       @RequestParam(value = "from", required = false,
-                                                                              defaultValue = "0") Integer from,
+                                                                              defaultValue = "0")
+                                                                      @PositiveOrZero Integer from,
                                                                       @RequestParam(value = "size", required = false,
-                                                                              defaultValue = "20") Integer size,
+                                                                              defaultValue = "20")
+                                                                          @Positive Integer size,
                                                                       HttpServletRequest httpServletRequest) {
         log.info("Получен запрос к эндпоинту: {} {}, значение X-Sharer-User-Id {}, параметры запроса from {}, size {}",
                 httpServletRequest.getMethod(), httpServletRequest.getRequestURI(), userId, from, size);
@@ -57,7 +60,6 @@ public class ItemRequestController {
     }
 
     @GetMapping("{requestId}")
-    @Transactional(rollbackOn = Exception.class)
     public ItemRequestDto getItemRequestById(@PathVariable long requestId,
                                              @RequestHeader("X-Sharer-User-Id") long userId,
                                              HttpServletRequest httpServletRequest) {
