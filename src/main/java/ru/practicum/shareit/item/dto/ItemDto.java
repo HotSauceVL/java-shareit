@@ -1,24 +1,26 @@
 package ru.practicum.shareit.item.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 import ru.practicum.shareit.item.comment.CommentDto;
-import ru.practicum.shareit.validate.OnCreate;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@Builder
 @AllArgsConstructor
 public class ItemDto {
+    @PositiveOrZero
     private long id;
-    @NotBlank(groups = OnCreate.class)
+    @NotBlank
     private String name;
-    @NotBlank(groups = OnCreate.class)
+    @NotBlank
     private String description;
-    @NotNull(groups = OnCreate.class)
+    @NotNull
     private Boolean available;
     private List<CommentDto> comments;
-   // private ItemRequest request;
+    private Long requestId;
 }

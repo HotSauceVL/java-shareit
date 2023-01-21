@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.practicum.shareit.booking.BookingStatus;
 import ru.practicum.shareit.booking.dao.repository.BookingRepository;
 import ru.practicum.shareit.booking.model.Booking;
+import ru.practicum.shareit.booking.service.BookingServiceForItem;
 
 import java.time.LocalDateTime;
 import java.util.Optional;

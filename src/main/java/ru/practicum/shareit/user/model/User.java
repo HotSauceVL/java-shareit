@@ -1,4 +1,4 @@
-package ru.practicum.shareit.user;
+package ru.practicum.shareit.user.model;
 
 import lombok.*;
 
@@ -10,6 +10,7 @@ import java.util.Objects;
 @Setter
 @RequiredArgsConstructor
 @Entity
+@Builder
 @Table(name = "users")
 @AllArgsConstructor
 public class User {

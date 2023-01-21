@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.user.mapper.UserMapper;
 import ru.practicum.shareit.user.service.UserService;
-import ru.practicum.shareit.validate.OnCreate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -38,7 +37,7 @@ public class UserController {
     }
 
     @PostMapping
-    @Validated(OnCreate.class)
+    @Validated
     public UserDto add(@Valid @RequestBody UserDto userDto, HttpServletRequest httpServletRequest) {
         log.info("Получен запрос к эндпоинту: {} {}, тело запроса {}", httpServletRequest.getMethod(),
                 httpServletRequest.getRequestURI(), userDto);
@@ -46,7 +45,7 @@ public class UserController {
     }
 
     @PatchMapping("/{userId}")
-    public UserDto update(@PathVariable long userId, @Valid @RequestBody UserDto userDto,
+    public UserDto update(@PathVariable long userId, @RequestBody UserDto userDto,
                           HttpServletRequest httpServletRequest) {
         log.info("Получен запрос к эндпоинту: {} {}, параметр пути запроса {}, тело запроса {}",
                 httpServletRequest.getMethod(),httpServletRequest.getRequestURI(), userId, userDto);

@@ -4,7 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import ru.practicum.shareit.item.comment.Comment;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CommentsRepository extends JpaRepository<Comment, Long> {
-    List<Comment> findAllByItem_Id(long itemId);
+    Optional<List<Comment>> findAllByItem_Id(long itemId);
 }

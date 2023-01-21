@@ -11,6 +11,8 @@ import ru.practicum.shareit.booking.service.BookingService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import javax.xml.bind.ValidationException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,8 +28,8 @@ public class BookingController {
 
     @PostMapping
     public BookingOutputDto add(@RequestHeader("X-Sharer-User-Id") long userId,
-                               @Valid @RequestBody BookingInputDto bookingInputDto, HttpServletRequest httpServletRequest)
-            throws ValidationException {
+                               @Valid @RequestBody BookingInputDto bookingInputDto,
+                                HttpServletRequest httpServletRequest) throws ValidationException {
         log.info("Получен запрос к эндпоинту: {} {}, userId {}, тело запроса {}",
                 httpServletRequest.getMethod(), httpServletRequest.getRequestURI(), userId, bookingInputDto);
         return BookingMapper.toBookingDto(bookingService.add(userId, bookingInputDto));
@@ -36,7 +38,7 @@ public class BookingController {
     @PatchMapping("/{bookingId}")
     public BookingOutputDto bookingConfirmation(@RequestHeader("X-Sharer-User-Id") long userId,
                                                 @PathVariable Long bookingId,
-                                                @RequestParam(value = "approved", required = true) boolean approved,
+                                                @RequestParam(value = "approved") boolean approved,
                                                 HttpServletRequest httpServletRequest) {
         log.info("Получен запрос к эндпоинту: {} {}, userId {}, bookingId {}, статус {}",
                 httpServletRequest.getMethod(), httpServletRequest.getRequestURI(), userId, bookingId, approved);
@@ -55,11 +57,16 @@ public class BookingController {
     public List<BookingOutputDto> getAllBookingByUser(@RequestHeader("X-Sharer-User-Id") long userId,
                                                      @RequestParam(value = "state", required = false,
                                                         defaultValue = "ALL") StateStatus state,
+                                                      @RequestParam (value = "from", required = false,
+                                                              defaultValue = "0") @PositiveOrZero Integer from,
+                                                      @RequestParam(value = "size", required = false,
+                                                              defaultValue = "20") @Positive Integer size,
                                                      HttpServletRequest httpServletRequest) {
 
-        log.info("Получен запрос к эндпоинту: {} {}, значение X-Sharer-User-Id {}, параметр state {}, тело запроса {}",
-                httpServletRequest.getMethod(), httpServletRequest.getRequestURI(), userId, state);
-        return bookingService.getAllBookingByUser(userId, state)
+        log.info("Получен запрос к эндпоинту: {} {}, значение X-Sharer-User-Id {}, параметр state {}," +
+                        " from {}, size {}",
+                httpServletRequest.getMethod(), httpServletRequest.getRequestURI(), userId, state, from, size);
+        return bookingService.getAllBookingByUser(userId, state, from, size)
                 .stream().map(BookingMapper::toBookingDto).collect(Collectors.toList());
     }
 
@@ -67,10 +74,15 @@ public class BookingController {
     public List<BookingOutputDto> getAllBookingByOwner(@RequestHeader("X-Sharer-User-Id") long userId,
                                                       @RequestParam(value = "state", required = false,
                                                         defaultValue = "ALL") StateStatus state,
+                                                        @RequestParam(value = "from", required = false,
+                                                               defaultValue = "0") @PositiveOrZero Integer from,
+                                                        @RequestParam(value = "size", required = false,
+                                                               defaultValue = "20") @Positive Integer size,
                                                       HttpServletRequest httpServletRequest) {
-        log.info("Получен запрос к эндпоинту: {} {}, значение X-Sharer-User-Id {}, параметр state {}, тело запроса {}",
-                httpServletRequest.getMethod(), httpServletRequest.getRequestURI(), userId, state);
-        return bookingService.getAllBookingByOwner(userId, state)
+        log.info("Получен запрос к эндпоинту: {} {}, значение X-Sharer-User-Id {}, параметр state {}," +
+                        " from {}, size {}",
+                httpServletRequest.getMethod(), httpServletRequest.getRequestURI(), userId, state, from, size);
+        return bookingService.getAllBookingByOwner(userId, state, from, size)
                 .stream().map(BookingMapper::toBookingDto).collect(Collectors.toList());
     }
 }

@@ -38,7 +38,14 @@ public class ErrorHandler {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse handleBookingNotFoundException(final BookingNotFoundException e) {
-        log.info("Предмет недоступен: " + e.getMessage());
+        log.info("Бронирование не найдено: " + e.getMessage());
+        return new ErrorResponse(e.getMessage());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleItemRequestNotFoundException(final ItemRequestNotFoundException e) {
+        log.info("Запрос прелмета не найден: " + e.getMessage());
         return new ErrorResponse(e.getMessage());
     }
 
@@ -49,24 +56,11 @@ public class ErrorHandler {
         return new ErrorResponse(e.getMessage());
     }
 
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public ErrorResponse handleEmailExistException(final EmailExistException e) {
-        log.info("Такой email уже существует: " + e.getMessage());
-        return new ErrorResponse(e.getMessage());
-    }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleValidationException(final ValidationException e) {
-        log.info("Ошибка валидации: " + e.getMessage());
-        return new ErrorResponse(e.getMessage());
-    }
-
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleItemAvailableException(final ItemAvailableException e) {
-        log.info("Предмет недоступен: " + e.getMessage());
+    public ErrorResponse handleBadRequestException(final BadRequestException e) {
+        log.info("Ошибка запроса: " + e.getMessage());
         return new ErrorResponse(e.getMessage());
     }
 

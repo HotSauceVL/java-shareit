@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication
-//@EnableJpaRepositories(basePackages = "ru.practicum")
 @EntityScan(basePackages = "ru.practicum")
 public class ShareItApp {
 

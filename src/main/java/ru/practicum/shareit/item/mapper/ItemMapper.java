@@ -18,7 +18,8 @@ public class ItemMapper {
                 item.getDescription(),
                 item.isAvailable(),
                 item.getComments() != null && item.getComments().size() != 0 ? item.getComments().stream()
-                        .map(CommentMapper::toCommentDto).collect(Collectors.toList()) : new ArrayList<>()
+                        .map(CommentMapper::toCommentDto).collect(Collectors.toList()) : new ArrayList<>(),
+                item.getItemRequest() != null ? item.getItemRequest().getId() : null
         );
     }
 
@@ -38,6 +39,7 @@ public class ItemMapper {
     public static Item toItem(ItemDto itemDto) {
         return new Item(
                 itemDto.getId(),
+                null,
                 null,
                 itemDto.getName(),
                 itemDto.getDescription(),
