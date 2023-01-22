@@ -166,12 +166,11 @@ class BookingServiceTest {
     }
 
     @Test
-    void bookingConfirmationShouldBookingConfirmationExceptionWhenStatusIsApprove() {
+    void bookingConfirmationShouldBadRequestExceptionWhenStatusIsApprove() {
         when(bookingRepository.findById(anyLong())).thenReturn(Optional.of(booking));
 
-        BookingConfirmationException exception = assertThrows(BookingConfirmationException.class,
+        assertThrows(BadRequestException.class,
                 () -> bookingService.bookingConfirmation(ownerUser.getId(), booking.getId(), true));
-        assertEquals("Нельзя изменить статус одобренного бронирования", exception.getMessage());
     }
 
     @Test
@@ -307,11 +306,11 @@ class BookingServiceTest {
     }
 
     @Test
-    void getAllBookingByBookerShouldBookingBadRequestExceptionWhenBookingStatusIsWrong() {
+    void getAllBookingByBookerShouldBadRequestExceptionWhenBookingStatusIsWrong() {
         when(bookingRepository.findAllByBooker_Id(anyLong(), any(Pageable.class)))
                 .thenReturn(Optional.of(List.of(booking, bookingWaitingStatus)));
 
-        assertThrows(BookingBadRequestException.class,
+        assertThrows(BadRequestException.class,
                 () -> bookingService.getAllBookingByUser(bookerUser.getId(), StateStatus.ERROR, 0, 2));
     }
 

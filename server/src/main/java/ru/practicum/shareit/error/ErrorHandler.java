@@ -79,21 +79,6 @@ public class ErrorHandler {
     }
 
     @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleBookingConfirmationException(final BookingConfirmationException e) {
-        log.info("Ошибка подтверждения: " + e.getMessage());
-        return new ErrorResponse(e.getMessage());
-    }
-
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleBookingBadRequestException(final BookingBadRequestException e) {
-        log.info("Ошибка запроса бронирования: " + e.getMessage());
-        return new ErrorResponse(e.getMessage());
-    }
-
-
-    @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse handleMethodArgumentTypeMismatchException(final MethodArgumentTypeMismatchException e) {
         log.info("Такого метода не существует: " + e.getMessage());

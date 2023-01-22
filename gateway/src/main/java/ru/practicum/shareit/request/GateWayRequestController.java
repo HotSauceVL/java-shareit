@@ -37,12 +37,8 @@ public class GateWayRequestController {
     @GetMapping("/all")
     public ResponseEntity<Object> getAllItemRequestsCreatedAnotherUsers(
             @RequestHeader("X-Sharer-User-Id") @PositiveOrZero long userId,
-            @RequestParam(value = "from", required = false,
-                    defaultValue = "0")
-            @PositiveOrZero int from,
-            @RequestParam(value = "size", required = false,
-                    defaultValue = "20")
-            @Positive int size) {
+            @RequestParam(value = "from", required = false, defaultValue = "0") @PositiveOrZero int from,
+            @RequestParam(value = "size", required = false, defaultValue = "20") @Positive int size) {
         log.info("Get all requests created by another user {}, from {}, size {}", userId, from, size);
         return requestClient.getAllItemRequestsCreatedAnotherUsers(userId, from, size);
     }

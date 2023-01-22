@@ -46,8 +46,10 @@ public class GateWayItemController {
 
     @GetMapping()
     public ResponseEntity<Object> getAllbyUserId(@RequestHeader("X-Sharer-User-Id") @PositiveOrZero long userId,
-                                         @PositiveOrZero @RequestParam(name = "from", defaultValue = "0") Integer from,
-                                         @Positive @RequestParam(name = "size", defaultValue = "10") Integer size) {
+                                         @PositiveOrZero @RequestParam(name = "from", required = false,
+                                                 defaultValue = "0") Integer from,
+                                         @Positive @RequestParam(name = "size", required = false,
+                                                 defaultValue = "20") Integer size) {
         log.info("Get all items by user {}, from {}, size {}", userId, from, size);
         return itemClient.getAllByUserId(userId, from, size);
     }
@@ -69,8 +71,10 @@ public class GateWayItemController {
     @GetMapping("search")
     public ResponseEntity<Object> searchByText(@RequestParam String text,
                                          @RequestHeader("X-Sharer-User-Id") @PositiveOrZero long userId,
-                                         @PositiveOrZero @RequestParam(name = "from", defaultValue = "0") int from,
-                                         @Positive @RequestParam(name = "size", defaultValue = "10") int size) {
+                                         @PositiveOrZero @RequestParam(name = "from", required = false,
+                                                 defaultValue = "0") int from,
+                                         @Positive @RequestParam(name = "size", required = false,
+                                                 defaultValue = "20") int size) {
         log.info("Search items by text {}, user {}, from {}, size {}", text, userId, from, size);
         return itemClient.searchByText(text, userId, from, size);
     }

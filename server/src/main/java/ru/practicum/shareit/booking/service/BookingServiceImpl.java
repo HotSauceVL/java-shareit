@@ -48,7 +48,7 @@ public class BookingServiceImpl implements BookingService {
     public Booking bookingConfirmation(Long userId, Long bookingId, boolean approved) {
         Booking booking = getBooking(bookingId);
         if (booking.getStatus() == BookingStatus.APPROVED) {
-            throw new BookingConfirmationException("Нельзя изменить статус одобренного бронирования");
+            throw new BadRequestException("Нельзя изменить статус одобренного бронирования");
         }
         BookingStatus status;
         if (approved) {
@@ -105,7 +105,8 @@ public class BookingServiceImpl implements BookingService {
            case CURRENT:
                return bookings.stream().filter(booking -> LocalDateTime.now().withNano(0)
                        .isAfter(booking.getStart()) &&
-                       LocalDateTime.now().isBefore(booking.getEnd())).collect(Collectors.toList());
+                       LocalDateTime.now().withNano(0)
+                               .isBefore(booking.getEnd())).collect(Collectors.toList());
            case PAST:
                return bookings.stream().filter(booking -> LocalDateTime.now().withNano(0)
                                .isAfter(booking.getEnd()))
@@ -120,7 +121,7 @@ public class BookingServiceImpl implements BookingService {
                return bookings.stream().filter(booking -> booking.getStatus() == BookingStatus.REJECTED)
                        .collect(Collectors.toList());
            default:
-               throw new BookingBadRequestException("Использование такого статуса невозможно");
+               throw new BadRequestException("Использование такого статуса невозможно");
        }
    }
 

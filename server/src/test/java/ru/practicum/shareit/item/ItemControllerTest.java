@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import ru.practicum.shareit.error.exception.BookingBadRequestException;
+import ru.practicum.shareit.error.exception.BadRequestException;
 import ru.practicum.shareit.error.exception.ItemNotFoundException;
 import ru.practicum.shareit.error.exception.UserNotFoundException;
 import ru.practicum.shareit.item.comment.Comment;
@@ -177,7 +177,7 @@ public class ItemControllerTest {
     @Test
     void addCommentShouldAnswer400WhereBookingIsWrong() throws Exception {
         when(itemService.addComment(anyLong(), anyLong(), any()))
-                .thenThrow(new BookingBadRequestException(""));
+                .thenThrow(new BadRequestException(""));
 
         mockMvc.perform(post(baseUrl + "/{itemId}/comment", 99L)
                         .contentType("application/json")

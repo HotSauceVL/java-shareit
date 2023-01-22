@@ -38,7 +38,7 @@ public class ItemRequestServiceImpl implements ItemRequestService {
     @Override
     @Transactional(rollbackOn = Exception.class)
     public ItemRequest add(long userId, ItemRequestDto itemRequestDto) {
-        itemRequestDto.setCreated(LocalDateTime.now());
+        itemRequestDto.setCreated(LocalDateTime.now().withNano(0));
         ItemRequest itemRequest = ItemRequestMapper.toItemRequest(itemRequestDto);
         itemRequest.setRequestor(userService.getById(userId));
         return itemRequestRepository.save(itemRequest);

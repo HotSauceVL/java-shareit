@@ -9,7 +9,7 @@ import ru.practicum.shareit.PageCreator;
 import ru.practicum.shareit.booking.BookingStatus;
 import ru.practicum.shareit.booking.service.BookingServiceForItem;
 import ru.practicum.shareit.error.exception.AccessErrorException;
-import ru.practicum.shareit.error.exception.BookingBadRequestException;
+import ru.practicum.shareit.error.exception.BadRequestException;
 import ru.practicum.shareit.error.exception.ItemNotFoundException;
 import ru.practicum.shareit.item.comment.Comment;
 import ru.practicum.shareit.item.comment.CommentDto;
@@ -114,7 +114,7 @@ public class ItemServiceImpl implements ItemService {
             return  commentsRepository.save(CommentMapper.toComment(commentDto, userService.getById(userId),
                     getItem(itemId)));
         } else {
-          throw new BookingBadRequestException("Пользователь " + userId + " не брал вещь " + itemId + " в аренду");
+          throw new BadRequestException("Пользователь " + userId + " не брал вещь " + itemId + " в аренду");
         }
     }
 
