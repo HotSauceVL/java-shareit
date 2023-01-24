@@ -1,6 +1,5 @@
 package ru.practicum.shareit;
 
-import ru.practicum.shareit.error.exception.BadRequestException;
 import ru.practicum.shareit.error.exception.ConflictException;
 
 public class PageCreator {

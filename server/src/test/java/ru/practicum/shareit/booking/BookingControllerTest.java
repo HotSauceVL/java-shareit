@@ -8,10 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import ru.practicum.shareit.booking.dao.repository.BookingRepository;
 import ru.practicum.shareit.booking.dto.BookingInputDto;
 import ru.practicum.shareit.booking.model.Booking;
-import ru.practicum.shareit.booking.service.BookingService;
 import ru.practicum.shareit.booking.service.BookingServiceImpl;
 import ru.practicum.shareit.error.exception.AccessErrorException;
 import ru.practicum.shareit.error.exception.BookingNotFoundException;
@@ -180,7 +178,7 @@ public class BookingControllerTest {
         mockMvc.perform(get(baseUrl + "/{bookingId}", booking.getId())
                         .header("X-Sharer-User-Id", bookerUser.getId()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.item.name", is(booking.getItem().getName())));;
+                .andExpect(jsonPath("$.item.name", is(booking.getItem().getName())));
     }
 
     @Test
