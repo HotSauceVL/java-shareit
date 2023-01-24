@@ -50,7 +50,7 @@ public class ItemRequestServiceImpl implements ItemRequestService {
         Pageable pageable = PageRequest.of(PageCreator.getPage(from, size), size,
                 Sort.by(Sort.Direction.DESC, "createdTime"));
         return itemRequestRepository.findAllByRequestor_IdIsNot(userId, pageable)
-                .orElse(new ArrayList<>());
+                .orElse(new ArrayList<>()).stream().map(this::setRequestItems).collect(Collectors.toList());
     }
 
     @Override
