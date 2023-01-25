@@ -1,7 +1,9 @@
 package ru.practicum.shareit.item;
 
+import jdk.jshell.Snippet;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -13,6 +15,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping(path = "/items")
@@ -70,13 +73,14 @@ public class GateWayItemController {
     }
 
     @GetMapping("search")
-    public ResponseEntity<Object> searchByText(@RequestParam @NotBlank String text,
+    public ResponseEntity<Object> searchByText(@RequestParam String text,
                                          @RequestHeader("X-Sharer-User-Id") @PositiveOrZero long userId,
                                          @PositiveOrZero @RequestParam(name = "from", required = false,
                                                  defaultValue = "0") int from,
                                          @Positive @RequestParam(name = "size", required = false,
                                                  defaultValue = "20") int size) {
         log.info("Search items by text {}, user {}, from {}, size {}", text, userId, from, size);
+        if (text.isBlank()) return new ResponseEntity<>(new ArrayList<ItemDto>(), HttpStatus.OK) ;
         return itemClient.searchByText(text, userId, from, size);
     }
 
