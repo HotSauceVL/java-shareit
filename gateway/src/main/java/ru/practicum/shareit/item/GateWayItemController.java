@@ -10,6 +10,7 @@ import ru.practicum.shareit.item.dto.CommentDto;
 import ru.practicum.shareit.item.dto.ItemDto;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 
@@ -69,7 +70,7 @@ public class GateWayItemController {
     }
 
     @GetMapping("search")
-    public ResponseEntity<Object> searchByText(@RequestParam String text,
+    public ResponseEntity<Object> searchByText(@RequestParam @NotBlank String text,
                                          @RequestHeader("X-Sharer-User-Id") @PositiveOrZero long userId,
                                          @PositiveOrZero @RequestParam(name = "from", required = false,
                                                  defaultValue = "0") int from,
