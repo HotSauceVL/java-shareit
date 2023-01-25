@@ -78,7 +78,7 @@ public class GateWayItemController {
                                          @Positive @RequestParam(name = "size", required = false,
                                                  defaultValue = "20") int size) {
         log.info("Search items by text {}, user {}, from {}, size {}", text, userId, from, size);
-        if (text.isBlank()) return new ResponseEntity<>(new ArrayList<ItemDto>(), HttpStatus.OK) ;
+        if (text.isBlank()) return new ResponseEntity<>(new ArrayList<ItemDto>(), HttpStatus.OK);
         return itemClient.searchByText(text, userId, from, size);
     }
 
